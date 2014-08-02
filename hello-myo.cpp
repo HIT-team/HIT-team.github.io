@@ -69,14 +69,19 @@ public:
         onArm = false;
     }
     
-    void onCheese()
+    void doCheese()
     {
         //do something wih the camera
     }
     
-    void onUpload()
+    void doUpload()
     {
         //do something to upload
+    }
+    
+    void doKawaii()
+    {
+        //so kawaii-desu
     }
 
     // There are other virtual functions in DeviceListener that we could override here, like onAccelerometerData().
@@ -106,13 +111,18 @@ public:
             //          << '[' << poseString << std::string(14 - poseString.size(), ' ') << ']';
             std::cout << (whichArm == myo::armLeft ? "0":"1") << "," << poseString;
             if (currentPose == myo::Pose::thumbToPinky && pitch_w <= 4) {
-                onCheese();
+                doCheese();
                 std::cout << ", cheese!";
             }
             else if (currentPose == myo::Pose::fingersSpread && pitch_w <= 8)
             {
-                onUpload();
+                doUpload();
                 std::cout << ", upload!";
+            }
+            else if (currentPose == myo::Pose::fingersSpread && yaw_w >= 12)
+            {
+                doKawaii();
+                std::cout << ", kawaii!";
             }
         } else {
             // Print out a placeholder for the arm and pose when Myo doesn't currently know which arm it's on.
