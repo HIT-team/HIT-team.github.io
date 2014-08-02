@@ -68,6 +68,16 @@ public:
     {
         onArm = false;
     }
+    
+    void onCheese()
+    {
+        //do something wih the camera
+    }
+    
+    void onUpload()
+    {
+        //do something to upload
+    }
 
     // There are other virtual functions in DeviceListener that we could override here, like onAccelerometerData().
     // For this example, the functions overridden above are sufficient.
@@ -95,7 +105,15 @@ public:
             //std::cout << '[' << (whichArm == myo::armLeft ? "L" : "R") << ']'
             //          << '[' << poseString << std::string(14 - poseString.size(), ' ') << ']';
             std::cout << (whichArm == myo::armLeft ? "0":"1") << "," << poseString;
-            if (currentPose == myo::Pose::thumbToPinky && pitch_w <= 4) std::cout << ", cheese!";
+            if (currentPose == myo::Pose::thumbToPinky && pitch_w <= 4) {
+                onCheese();
+                std::cout << ", cheese!";
+            }
+            else if (currentPose == myo::Pose::fingersSpread && pitch_w <= 8)
+            {
+                onUpload();
+                std::cout << ", upload!";
+            }
         } else {
             // Print out a placeholder for the arm and pose when Myo doesn't currently know which arm it's on.
             std::cout << "[?]" << '[' << std::string(14, ' ') << ']';
