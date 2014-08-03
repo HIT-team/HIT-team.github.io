@@ -12,12 +12,11 @@
 // The only file that needs to be included to use the Myo C++ SDK is myo.hpp.
 #include <myo/myo.hpp>
 
+static const int TOTAL_AVG = 5;
+
 class DataCollector : public myo::DeviceListener {
 public:
-	DataCollector()
-		: onArm(false), roll_w(0), pitch_w(0), yaw_w(0), currentPose()
-	{
-	}
+	DataCollector();
 	// onOrientationData() is called whenever the Myo device provides its current orientation, which is represented
 	// as a unit quaternion.
 	void onOrientationData(myo::Myo* myo, uint64_t timestamp, const myo::Quaternion<float>& quat);
@@ -40,6 +39,7 @@ public:
 
 	// We define this function to print the current values that were updated by the on...() functions above.
 	void print();
+	void update();
 
 private:
 	// These values are set by onArmRecognized() and onArmLost() above.
@@ -47,15 +47,29 @@ private:
 	myo::Arm whichArm;
 
 	// These values are set by onOrientationData() and onPose() above.
-	int roll_w, pitch_w, yaw_w;
+	int _roll_w, _pitch_w, _yaw_w;
+	int _roll_v, _pitch_v, _yaw_v;
+	int _position[3];
+	int _velocity[3];
+	int _scale, _descale;
+	int _pos_buff[3][TOTAL_AVG];
+	int _vel_buff[3][TOTAL_AVG];
+	int _acc_buff[3][TOTAL_AVG];
+	int _mean[3];
+	int _min_max[3];
+	int _current_pt;
+
+	bool _recalibrate;
+	bool _funct_on;
 	myo::Pose currentPose;
 
-	void doCheese(myo::Myo* myo);
+	int averageInput(int * in);
+	void doCheese();// myo::Myo* myo);
 	std::string getLastPhoto();
-	void doUpload(myo::Myo* myo);
-	void doDelete(myo::Myo* myo);
-	void doKawaii(myo::Myo* myo);
-	void processData(myo::Myo* myo);
+	void doUpload();// myo::Myo* myo);
+	void doDelete();// myo::Myo* myo);
+	void doKawaii();// myo::Myo* myo);
+	void processData();// myo::Myo* myo);
 
 };
 
