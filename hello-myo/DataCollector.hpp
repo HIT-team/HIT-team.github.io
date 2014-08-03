@@ -51,7 +51,9 @@ private:
 	myo::Pose currentPose;
 
 	void doCheese(myo::Myo* myo);
+	std::string getLastPhoto();
 	void doUpload(myo::Myo* myo);
+	void doDelete(myo::Myo* myo);
 	void doKawaii(myo::Myo* myo);
 	void processData(myo::Myo* myo);
 

@@ -84,21 +84,44 @@ void DataCollector::print()
 
 void DataCollector::doCheese(myo::Myo* myo)
 {
-	//do something wih the camera
+	//I guess this hooks into the camera somehow
 	std::cout << "COMMAND: cheese!" << std::endl;
 	myo->vibrate(myo::Myo::vibrationMedium);
 }
 
+std::string getLastPhoto()
+{
+	// FIXME: Change this to a proper find
+	std::string fpath = "/home/clement/Documents/trollface.jpg";
+	return fpath;
+}
+
 void DataCollector::doUpload(myo::Myo* myo)
 {
-	//do something to upload
+	//create command string for twurl
+	// We'll assume we're only uploading the latest photo
+	// A few bad things happening here.
+	// 1. Assuming twurl is installed somewhere on the path
+	// 2. Using system() to execute the command
+	std::string cmd = "twurl -X POST \"/1.1/statuses/update_with_media.json\" --file \"" + 
+		          getLastPhoto() + "\" --file-field \"media[]\"";
+	//Fuckin' using system(), this is dumb.
+	std::system(cmd);
 	std::cout << "COMMAND: upload!" << std::endl;
 	myo->vibrate(myo::Myo::vibrationMedium);
 }
 
+void DataCollector::doDelete(myo::Myo* myo)
+{
+	//delete last photo taken
+	std::cout << "COMMAND: Exterminate!" << std::endl;
+	myo->vibrate(myo::Myo::vibrationMedium);
+	std::string cmd = 
+}
+
 void DataCollector::doKawaii(myo::Myo* myo)
 {
-	//so kawaii-desu
+	// Make last photo sooo kawaiii
 	std::cout << "COMMAND: kawaii!" << std::endl;
 	myo->vibrate(myo::Myo::vibrationMedium);
 }
@@ -115,5 +138,9 @@ void DataCollector::processData(myo::Myo* myo)
 	else if (currentPose == myo::Pose::fingersSpread && yaw_w >= 12)
 	{
 		doKawaii(myo);
+	}
+	else if (currentPose == myo::Pose::waveOut)
+	{
+		doDelete(myo);
 	}
 }
