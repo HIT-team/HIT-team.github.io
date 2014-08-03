@@ -51,6 +51,7 @@ public:
         if (pose == myo::Pose::fist) {
             myo->vibrate(myo::Myo::vibrationMedium);
         }
+        processData();
     }
 
     // onArmRecognized() is called whenever Myo has recognized a setup gesture after someone has put it on their
@@ -69,23 +70,6 @@ public:
         onArm = false;
     }
     
-    void doCheese()
-    {
-        //do something wih the camera
-        std::cout << ", cheese!";
-    }
-    
-    void doUpload()
-    {
-        //do something to upload
-        std::cout << ", upload!";
-    }
-    
-    void doKawaii()
-    {
-        //so kawaii-desu
-        std::cout << ", kawaii!";
-    }
 
     // There are other virtual functions in DeviceListener that we could override here, like onAccelerometerData().
     // For this example, the functions overridden above are sufficient.
@@ -113,17 +97,6 @@ public:
             //std::cout << '[' << (whichArm == myo::armLeft ? "L" : "R") << ']'
             //          << '[' << poseString << std::string(14 - poseString.size(), ' ') << ']';
             std::cout << (whichArm == myo::armLeft ? "0":"1") << "," << poseString;
-            if (currentPose == myo::Pose::thumbToPinky && pitch_w <= 4) {
-                doCheese();
-            }
-            else if (currentPose == myo::Pose::fingersSpread && pitch_w <= 8)
-            {
-                doUpload();
-            }
-            else if (currentPose == myo::Pose::fingersSpread && yaw_w >= 12)
-            {
-                doKawaii();
-            }
         } else {
             // Print out a placeholder for the arm and pose when Myo doesn't currently know which arm it's on.
             std::cout << "[?]" << '[' << std::string(14, ' ') << ']';
@@ -132,6 +105,7 @@ public:
         std::cout << std::flush;
     }
 
+private:
     // These values are set by onArmRecognized() and onArmLost() above.
     bool onArm;
     myo::Arm whichArm;
@@ -139,6 +113,40 @@ public:
     // These values are set by onOrientationData() and onPose() above.
     int roll_w, pitch_w, yaw_w;
     myo::Pose currentPose;
+    
+        void doCheese()
+    {
+        //do something wih the camera
+        std::cout << "COMMAND: cheese!" << std::endl;
+    }
+    
+    void doUpload()
+    {
+        //do something to upload
+        std::cout << "COMMAND: upload!" << std::endl;
+    }
+    
+    void doKawaii()
+    {
+        //so kawaii-desu
+        std::cout << "COMMAND: kawaii!" << std::endl;
+    }
+    
+    void processData()
+    {
+        if (currentPose == myo::Pose::thumbToPinky && pitch_w <= 4) {
+            doCheese();
+        }
+        else if (currentPose == myo::Pose::fingersSpread && pitch_w <= 8)
+        {
+            doUpload();
+        }
+        else if (currentPose == myo::Pose::fingersSpread && yaw_w >= 12)
+        {
+            doKawaii();
+        }
+    }
+
 };
 
 int main(int argc, char** argv)
