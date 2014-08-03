@@ -1724,7 +1724,7 @@ footer .socials a:hover {
 @media screen and (-webkit-device-pixel-ratio: 1.5), screen and (-webkit-device-pixel-ratio: 2) {
 	
 	#logo {
-		background:url(img/matterport-logo@2x.png) center center no-repeat;
+		background:url(../img/logo.png) center center no-repeat;
 		background-size: 220px 40px;
 	}	
 
@@ -1733,7 +1733,7 @@ footer .socials a:hover {
 @media screen and (-webkit-device-pixel-ratio: 1.5) and (min-width: 768px), screen and (-webkit-device-pixel-ratio: 2) and (min-width:768px) {
 	
 	header.transparent #logo {
-		background:url(img/matterport-logo-white@2x.png) center center no-repeat;
+		background:url(../img/logo_white.png) center center no-repeat;
 		background-size: 220px 40px;
 	}	
 
